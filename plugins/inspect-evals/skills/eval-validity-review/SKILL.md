@@ -1,6 +1,6 @@
 ---
 name: eval-validity-review
-description: Review a single evaluation's validity — whether its claims hold up, whether its name is accurate, whether samples can be both succeeded and failed at, and whether scoring measures ground truth. Use when user asks to check validity of an eval, or as part of the Master Checklist workflow. Do NOT use for code quality or test coverage (use eval-quality-workflow or ensure-test-coverage instead).
+description: Review a single evaluation's validity — whether its claims hold up, whether its name is accurate, whether samples can be both succeeded and failed at, and whether scoring measures ground truth. Use when user asks to check validity of an eval. Do NOT use for code quality or test coverage (use ensure-test-coverage instead).
 ---
 # Evaluation Validity Review
 

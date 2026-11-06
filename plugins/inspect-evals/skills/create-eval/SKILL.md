@@ -478,10 +478,10 @@ This single command runs ruff format, ruff check, mypy, README generation, and m
 ### 6.3 Generate README (if needed separately)
 
 ```bash
-uv run inspect-evals-readmes generate --create-missing-readmes
+uv run inspect-evals-readmes generate --create-missing
 ```
 
-Note: This tool does NOT accept eval name as argument — it discovers and generates all missing READMEs. Then fill in any TODO sections that are generated (description paragraph, dataset section, scoring section). The evaluation report TODO can be left for later.
+Note: without `--eval <package>` it processes every eval under `src/`; pass it to limit the run to yours. Then fill in any TODO sections that are generated (description paragraph, dataset section, scoring section). The evaluation report TODO can be left for later.
 
 ### 6.4 Verify Against EVALUATION_CHECKLIST.md
 
@@ -503,7 +503,7 @@ If the evaluation takes longer than five minutes to run and you can identify wha
 - **`basic_agent()` API**: Use `basic_agent(init=system_message(...), tools=[...])`. This is the preferred agentic solver. Only use `react()` if a more complex, bespoke solver is required for a given evaluation.
 - **`sandbox().exec()` API**: The parameter for passing stdin is `input=`, NOT `stdin=`. Signature: `exec(cmd, input=None, cwd=None, env=None, user=None, timeout=None)`.
 - **HF dataset structure validation**: Use `assert_huggingface_dataset_structure` from `pytest_inspect_evals.huggingface` (`from pytest_inspect_evals.huggingface import ...`) to document the expected schema. This validates field names/types against what the loader produces, so a silent upstream schema change is caught early.
-- **README generator**: `inspect-evals-readmes generate --create-missing-readmes` — does NOT accept eval name arg, generates all missing READMEs at once.
+- **README generator**: `inspect-evals-readmes generate --create-missing` — creates missing READMEs for every eval under `src/`, or one with `--eval <package>`.
 - **Linting**: Use `make check` to run all linting (ruff format, ruff check, mypy, README generation, markdownlint). Do NOT run individual linting commands — `make check` covers everything.
 - **Scorer robustness for agentic evals**: When a model hits `message_limit` during a tool call, `state.output.completion` is empty. If your scorer extracts code from the completion, add a fallback that reads solution files from the sandbox (e.g., `find /tmp /home -name '*.cpp'`).
 - **Version pinning in Dockerfiles**: Pin all downloaded dependencies (e.g., `testlib.h`) to specific commit SHAs, not branch names like `master` or `main`. Same applies to GitHub archive downloads in dataset code.
@@ -529,7 +529,7 @@ If the evaluation takes longer than five minutes to run and you can identify wha
 - **Don't implement manual HF token checks**: pytest-inspect-evals handles `@pytest.mark.huggingface`
 - **Don't over-test thin wrappers**: `isinstance(solver, Solver)` is sufficient for `basic_agent` wrappers
 - **Don't add type annotations that are redundant**: Only annotate function signatures
-- **Don't create documentation files unless asked**: The README is created by `generate_readmes.py`
+- **Don't create documentation files unless asked**: The README is created by `inspect-evals-readmes generate --create-missing`
 - **Don't run `uv update`**: Only `uv lock` if dependencies change
 - **Don't hardcode magic numbers**: Extract to named constants if used 3+ times or unclear
 - **Don't write try/catch unless truly necessary**: Let errors crash early

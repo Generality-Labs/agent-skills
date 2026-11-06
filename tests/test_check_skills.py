@@ -130,3 +130,19 @@ def test_main_exit_codes(tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> 
     broken = make_repo(tmp_path / "broken", skills={"foo": skill_body("other")})
     assert check_skills.main([str(broken)]) == 1
     assert "foo" in capsys.readouterr().out
+
+
+def test_folded_description_is_accepted(tmp_path: Path) -> None:
+    body = (
+        "---\n"
+        "name: alpha\n"
+        "description: >-\n"
+        "  Use when the user asks for X: the long form,\n"
+        "  continued on a second line.\n"
+        "---\n\n# alpha\n"
+    )
+    root = make_repo(tmp_path, skills={"alpha": body})
+    assert check_skills.check_repo(root) == []
+    fields = check_skills.parse_frontmatter(body)
+    assert fields is not None
+    assert fields["description"] == "Use when the user asks for X: the long form, continued on a second line."

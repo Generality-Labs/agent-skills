@@ -31,20 +31,31 @@ FORBIDDEN_TOKENS = [
 
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 SCHEME_RE = re.compile(r"^[a-z][a-z0-9+.-]*:")
+KEY_RE = re.compile(r"^([A-Za-z0-9_-]+):")
 
 
 def parse_frontmatter(text: str) -> dict[str, str] | None:
-    """Return the key/value block between the first two `---` lines, or None."""
+    """Return the key/value block between the first two `---` lines, or None.
+
+    A key is a line starting at column 0 with `name:` form. Indented lines
+    continue the previous value, so folded descriptions (`description: >-`)
+    read as one string joined with spaces.
+    """
     lines = text.splitlines()
     if not lines or lines[0].strip() != "---":
         return None
     fields: dict[str, str] = {}
+    current: str | None = None
     for line in lines[1:]:
         if line.strip() == "---":
             return fields
-        if ":" in line:
-            key, _, value = line.partition(":")
-            fields[key.strip()] = value.strip()
+        key_match = KEY_RE.match(line)
+        if key_match:
+            current = key_match.group(1)
+            value = line[key_match.end():].strip()
+            fields[current] = "" if value in {">", ">-", "|", "|-"} else value
+        elif current is not None and line.strip():
+            fields[current] = f"{fields[current]} {line.strip()}".strip()
     return None
 
 
