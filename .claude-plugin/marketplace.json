@@ -1,0 +1,21 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "generality",
+  "description": "Generality Labs plugins for Inspect AI evaluation work.",
+  "owner": {
+    "name": "Generality Labs"
+  },
+  "plugins": [
+    {
+      "name": "inspect-evals",
+      "description": "Skills for authoring, testing and auditing Inspect AI evaluations.",
+      "author": {
+        "name": "Generality Labs"
+      },
+      "category": "development",
+      "source": "./plugins/inspect-evals",
+      "strict": false,
+      "homepage": "https://github.com/Generality-Labs/agent-skills"
+    }
+  ]
+}

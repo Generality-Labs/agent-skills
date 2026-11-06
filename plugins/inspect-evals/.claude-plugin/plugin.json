@@ -1,0 +1,10 @@
+{
+  "name": "inspect-evals",
+  "version": "1.0.0",
+  "description": "Skills for authoring, testing and auditing Inspect AI evaluations.",
+  "author": {
+    "name": "Generality Labs"
+  },
+  "repository": "https://github.com/Generality-Labs/agent-skills",
+  "license": "MIT"
+}
