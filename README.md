@@ -11,7 +11,7 @@ Repos created from inspect-evals-template enable the plugin for you. Their `.cla
 ```json
 {
   "extraKnownMarketplaces": {
-    "generality": { "source": { "source": "github", "repo": "Generality-Labs/agent-skills", "ref": "v1.0.0" } }
+    "generality": { "source": { "source": "github", "repo": "Generality-Labs/agent-skills", "ref": "v1.0.1" } }
   },
   "enabledPlugins": { "inspect-evals@generality": true }
 }
