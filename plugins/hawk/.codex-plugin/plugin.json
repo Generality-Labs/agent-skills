@@ -1,0 +1,16 @@
+{
+  "name": "hawk",
+  "version": "1.0.0",
+  "description": "Skills for running, monitoring and debugging evaluations on Generality Labs' Hawk deployment.",
+  "author": {
+    "name": "Generality Labs"
+  },
+  "repository": "https://github.com/Generality-Labs/agent-skills",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Hawk",
+    "shortDescription": "Skills for evaluations on Hawk",
+    "category": "Developer Tools"
+  }
+}
